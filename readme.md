@@ -1,6 +1,6 @@
 # 笔记notes
 
-这是我在NJUPT学习的笔记，仅仅作为学习记录，几乎不具有参考价值。不能保证正确性，通过Gitee Pages和docsify布置在<https://xsro.gitee.io/college-notes/#/>。
+这是我在NJUPT学习的笔记，仅仅作为学习记录，几乎不具有参考价值。不能保证正确性，通过Gitee Pages和docsify布置在<https://xsro.gitee.io/college-notes/#/readme>。
 
 ## 其他笔记
 
