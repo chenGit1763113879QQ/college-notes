@@ -18,19 +18,43 @@
       name: '<span>大学笔记</span>',
       repo: '',
       loadSidebar: 'content.md',
-      subMaxLevel: 2,
+      subMaxLevel: 4,
       coverpage: true,
       onlyCover: false,
-    }
+      plugins:[]
+    };
+
+    //support mermaid using https://docsify.js.org/#/markdown?id=supports-mermaid 
+    var num = 0;
+    mermaid.initialize({ startOnLoad: false });
+    window.$docsify.markdown =
+    {
+      renderer: {
+        code: function (code, lang) {
+          if (lang === "mermaid") {
+            return (
+              '<div class="mermaid">' + mermaid.render('mermaid-svg-' + num++, code) + "</div>"
+            );
+          }
+          return this.origin.code.apply(this, arguments);
+        }
+      }
+    };
+
+    //support edit on gitee by https://github.com/njleonzhang/docsify-edit-on-github#docsify-edit-on-github
+    window.$docsify.plugins.push(EditOnGithubPlugin.create(
+      "https://gitee.com/xsro/college-notes/tree/main/", 
+      null, 
+      "在Gitee中查看"
+    ));
+
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <!-- mermaid -->
-  <script src="//unpkg.com/mermaid/dist/mermaid.js"></script>
-  <script src="//unpkg.com/docsify-mermaid@latest/dist/docsify-mermaid.js"> 
-  <script>mermaid.initialize({ startOnLoad: true })</script>
-  <!-- CDN files for docsify-katex -->
+  <!-- Import mermaid -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css">
+  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <!-- support katex by https://github.com/upupming/docsify-katex#usage-->
   <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
-  <!-- or <script src="//cdn.jsdelivr.net/gh/upupming/docsify-katex@latest/dist/docsify-katex.js"></script> -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"/>
 </body>
 </html>
