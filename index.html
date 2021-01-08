@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>大学笔记</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <link rel="icon" href="https://portrait.gitee.com/uploads/avatars/user/2532/7597569_chenliucx_1599386104.png"
+    type="image/x-icon" />
 </head>
+
 <body>
   <nav>
     <a href="#/content.md">目录</a>
   </nav>
   <div id="app"></div>
+
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
   <script>
     window.$docsify = {
       name: '<span>大学笔记</span>',
       repo: '',
-      loadSidebar: 'content.md',
+      // loadSidebar: 'content.md',
       subMaxLevel: 4,
       coverpage: true,
       onlyCover: false,
-      plugins:[]
+      plugins: []
     };
+  </script>
 
-    //support mermaid using https://docsify.js.org/#/markdown?id=supports-mermaid 
+  <!-- support mermaid using https://docsify.js.org/#/markdown?id=supports-mermaid-->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css">
+  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
     var num = 0;
     mermaid.initialize({ startOnLoad: false });
     window.$docsify.markdown =
@@ -40,21 +51,22 @@
         }
       }
     };
+  </script>
 
-    //support edit on gitee by https://github.com/njleonzhang/docsify-edit-on-github#docsify-edit-on-github
+  <!-- support edit on gitee by https://github.com/njleonzhang/docsify-edit-on-github#docsify-edit-on-github -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
+  <script>
     window.$docsify.plugins.push(EditOnGithubPlugin.create(
-      "https://gitee.com/xsro/college-notes/tree/main/", 
-      null, 
+      "https://gitee.com/xsro/college-notes/tree/main/",
+      null,
       "在Gitee中查看"
     ));
-
   </script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <!-- Import mermaid -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css">
-  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
   <!-- support katex by https://github.com/upupming/docsify-katex#usage-->
   <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"/>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+
 </body>
+
 </html>
