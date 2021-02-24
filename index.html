@@ -18,13 +18,12 @@
     <a href="#/content.md">目录</a>
   </nav>
   <div id="app"></div>
-
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
   <script>
     window.$docsify = {
       name: '<span>大学笔记</span>',
-      repo: '',
-      // loadSidebar: 'content.md',
+      repo: 'https://gitee.com/xsro/college-notes',
+      loadSidebar: 'content.md',
       subMaxLevel: 4,
       coverpage: true,
       onlyCover: false,
@@ -32,7 +31,35 @@
     };
   </script>
 
-  <!-- support mermaid using https://docsify.js.org/#/markdown?id=supports-mermaid-->
+  <!-- use gitee corner using https://github.com/Koooooo-7/docsify-corner -->
+  <script>
+    function corner(hook, vm) {
+      // check if config the repo
+      const icon = "https://gitee.com/xsro/college-notes/widgets/widget_1.svg"
+      hook.mounted(function () {
+        const a = document.querySelector('a.github-corner')
+        a.href = 'https://gitee.com/xsro/college-notes'
+        a.innerHTML = `<img docsify-corner src=${icon} width= 80 height = 80>`
+      })
+    }
+    window.$docsify.plugins.push(corner)
+  </script>
+
+  <!-- support edit on gitee by https://docsify.js.org/#/write-a-plugin?id=edit-button -->
+  <script>
+    window.$docsify.plugins.push(
+      function (hook, vm) {
+        hook.beforeEach(function (mdstr) {
+          let url =
+            'https://gitee.com/xsro/college-notes/blob/main/' + vm.route.file;
+          let editHtml = '[📝 EDIT DOCUMENT](' + url + ')\n';
+          return editHtml + mdstr;
+        });
+      }
+    );
+  </script>
+
+  <!-- support mermaid using https://docsify.js.org/#/markdown?id=supports-mermaid -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css">
   <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   <script>
@@ -51,16 +78,6 @@
         }
       }
     };
-  </script>
-
-  <!-- support edit on gitee by https://github.com/njleonzhang/docsify-edit-on-github#docsify-edit-on-github -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
-  <script>
-    window.$docsify.plugins.push(EditOnGithubPlugin.create(
-      "https://gitee.com/xsro/college-notes/tree/main/",
-      null,
-      "在Gitee中查看"
-    ));
   </script>
 
   <!-- support katex by https://github.com/upupming/docsify-katex#usage-->
