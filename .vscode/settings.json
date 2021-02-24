@@ -1,3 +1,10 @@
 {
-    "html.format.enable": true,
+    "pasteImage.path": "${projectRoot}/pics",
+    "markdownlint.config": {
+        "MD033": false
+    },
+    "markdownlint.ignore": [
+        "README.md",
+        "_*.md"
+    ]
 }
