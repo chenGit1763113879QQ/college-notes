@@ -32,15 +32,20 @@ then the within-class scatter matrix(类内离散度矩阵) of training matrix o
 1. Computing the within-class scatter matrix
    1. $Sw_i=\sum(x-\mu_i)(x-\mu_i)^T$
    2. $Sw=\sum p_i Sw_i$
-2. Computing the eigenvalues and coressponding eigenvectors of within-class scatter matrix $Sw$. Choose bigger one(需要单位化)
+2. Computing the eigenvalues and coressponding eigenvectors of within-class scatter matrix $Sw$. Choose bigger one
 3. Generating the transformation matrix
-4. K-L transformation
+   1. 单位化
+   2. 正交化
+4. K-L transformation$y=T^Tx$
 
-## Principal Component Analysis for unknown typical training samples
+## Principal Component Analysis for unknown typical training samples(主成分分析法)
 
-1. Computing the covariance matrix $S_t$
-   1. $\sigma_{ij}=\frac{1}{N-1} \sum\limits_{k=1}^{N}(x_{ki}-\mu_i)(x_{kj}-\mu_j)$
-   2. $S_t=\frac{1}{N-1}\sum(x-\mu)(x-\mu)^T$
-2. eig
-3. T
-4. completing PCA transformation: $y=T^Tx$
+1. Computing the covariance matrix(协方差) $S_t$
+   1. $S_t=\{\sigma_{ij}\},\sigma_{ij}=\frac{1}{N-1} \sum\limits_{k=1}^{N}(x_{ki}-\mu_i)(x_{kj}-\mu_j)$
+   2. $S_t=\frac{1}{N-1}S_w=\frac{1}{N-1}\sum(x-\mu)(x-\mu)^T$
+   3. 是类内离散度矩阵的$\frac{1}{N-1}$
+2. $eig(S_t)$
+3. $W=[\xi_1,...]$
+4. completing PCA transformation
+   1. $y=w^T x_i$
+   2. $y=X w$

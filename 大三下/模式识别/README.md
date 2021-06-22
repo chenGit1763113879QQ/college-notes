@@ -19,6 +19,8 @@ book: Pattern Recognition 4th Ed. (2009)
 
 - 第三章 Probability
   - 正太分布时如何利用最小错误率确定
+    - 协方差相等
+    - 协方差不相等
   - 最大似然方法，估计样本的
   - 贝叶斯方法估计
 - 第四章 Linear Classfier
