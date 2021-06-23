@@ -10,7 +10,6 @@
 内容通过docsify渲染并布置在了Gitee Pages中。
 
 - [markdown笔记目录](content.md)
-- [传感器思维导图](https://xsro.gitee.io/college-notes/1)
 
 ## 感谢
 

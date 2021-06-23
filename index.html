@@ -49,12 +49,15 @@
   <script>
     window.$docsify.plugins.push(
       function (hook, vm) {
-        hook.beforeEach(function (mdstr) {
-          let url =
-            'https://gitee.com/xsro/college-notes/blob/main/' + vm.route.file;
-          let editHtml = '[📝 EDIT DOCUMENT](' + url + ')\n';
-          return editHtml + mdstr;
-        });
+        hook.beforeEach(
+          function (mdstr) {
+            const editUrl = 'https://gitee.com/xsro/college-notes/blob/main/' + vm.route.file;
+            const prefix = document.location.pathname.endsWith('/') ? '' : '..';
+            const markmapUrl = new URL(prefix + 'markmap.html', document.location);
+            const markdownUrl = new URL(prefix + vm.route.file, document.location);
+            return `[📝 EDIT DOCUMENT](${editUrl})\t[🎇MARKMAP](${markmapUrl}?md=${markdownUrl})\n` + mdstr;
+          }
+        );
       }
     );
   </script>
