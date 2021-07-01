@@ -59,32 +59,32 @@
 	2. Absolute correction
 	3. Partial correction
 15. The common activation functions include [ ] , [ ] and [ ]
-	1. sigmoid
-	2. tanH
-	3. ReLU
+	1. Sigmoid($\sigma(\cdot)$): $f(x)=\frac{1}{1+e^{-x}}$
+	2. hyperbolic tangent function(Tanh): $f(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}$
+	3. rectified linear function(ReLU): $f(x)=max(0,x)$
 16. For an artificial neural network, the output is affected by [ ] , [ ] and [ ]
-	1. input
-	2. weight
-	3. activation function
+	4. input
+	5. weight
+	6. activation function
 17. Decision tree model learning includes [ ] , [ ] and [ ]
-	1. feature selection
-	2. decision tree generation
-	3. decision tree pruning
+	7. feature selection
+	8. decision tree generation
+	9. decision tree pruning
 18. The common algotithm of decision tree are [ ] , [ ] and [ ]
-	1. ID3, C4.5 and CART
+	10. ID3, C4.5 and CART
 19. If the original feature of a sample x is $x=(x_1,x_2,x_3)^T$,then making a decison on  using [ ] approach to achieve the reduced feature $x=(x_1-x_3,x_2-x_3)^T$, and using [ ] approach to achieve the reduced feature $x=(x_1,x_2)^T$
-	1. **Feature extraction**:  Using the mapping (or transformation) methods to transform the original features to new features.
-	2. **Feature selection**: Selecting the most representative and best performance features from the original features.
+	11. **Feature extraction**:  Using the mapping (or transformation) methods to transform the original features to new features.
+	12. **Feature selection**: Selecting the most representative and best performance features from the original features.
 20. Two common approaches of dimension reduction are [ ] and [ ]
-	1. K-L:
-	2. PCA: Principal Component Analysis
+	13. K-L:
+	14. PCA: Principal Component Analysis
 21. For two orthogonal vectors $\varPhi_i$ and $\varPhi_j$,($i\neq j$), the result of $\varPhi_i \varPhi_j$ is [ ]
-	1.  0
+	15. 0
 22. From the view of Math, K-L transformation is one common [ ] transformation
-	1. orthogonal
+	16. orthogonal
 23. For clustering method, different [ ] and [ ] can both lead to  different clusters
-	1. Different similarity metric
-	2. Different dimensional scale
+	17. Different similarity metric
+	18. Different dimensional scale
 
 
 

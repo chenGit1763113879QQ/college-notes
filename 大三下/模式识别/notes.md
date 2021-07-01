@@ -34,28 +34,72 @@ ex-->output(category/regression values)
 
 # 03Classifiers based on bayes decision theory
 
-
 ## Probabilistic Reasoning
+
+Certainty reasoning vs Probabilistic reasoning
+
+```mermaid
+graph LR
+B-->|certainty reasoning|A
+B2(B)-->|probabilistic reasoning|A2("P(A|B)")
+A3(A)==>|converse<br> probabilistic reasoning|B3("P(B|A)")
+subgraph condition
+B
+B2
+B3
+end 
+subgraph conclusion
+A
+A2
+A3
+end
+```
 
 ## Principles of Bayes Classifiers
 
 ## Commonly Used Bayes Classifiers
 
+- minimum error estimation:  to the class i with max  $P(\omega_i|x)$
+- minimun risk estimation:  to the class with min risk $R(\alpha_i | x)$
+
+$$
+P(\omega_i | x)=\frac{P(x|\omega_i)P(\omega_i)}{P(x)}
+$$
+
+$$
+R(\alpha_i | x)= E[\lambda_{ij}]=\sum\limits_{j=1}^{c}\lambda_{ij} P(\omega_j|x)
+$$
+
 ## Bayesian Classification for Normal Distributions
+
+$$
+-\frac{1}{2} (x-\mu_1)^T \Sigma^{-1}_1(x-\mu_1)
++\frac{1}{2} (x-\mu_2)^T \Sigma^{-1}_2(x-\mu_2)
+\\
+-\frac{1}{2} \ln\frac{|\Sigma_1|}{|\Sigma_2|}
++\ln\frac{P(\omega_1)}{P(\omega_2)}\text{与零比较}
+$$
+
+
 
 ## Probability Density Estimation
 
+- Parameter estimation
+  - Maximum likelihood
+  - Bayesian Estimation
+- nonparameter estimation
+
 ## Nearest Neighbor
+
+k-NN
 
 ---
 
 # 04Linear Discriminant
 
-## Linear Discriminant Functions and Decision Hyperplanes
-## The Perceptron Algorithm
-## Least Squares Methods
-## Support Vector Machine
 
+
+## Linear Discriminant Functions and Decision Hyperplanes
 
 multiply nonsingular matrix's columns is zero?
 
@@ -65,6 +109,16 @@ get w(weight vector).find the optimal $w^*$
 - LEAST SQUARES METHODS
 - SVM
 
+## The Perceptron Algorithm
+
+
+
+## Least Squares Methods
+
+
+
+## Support Vector Machine
+
 slope: 截距
 direction: 方向，斜率
 
@@ -73,17 +127,25 @@ The larger d is better for the larger the classification interval,the fewer the 
 
 Geometrical interpretation of linear discrinant function 
 
+# 05Nonlinear Classifiers
+
+
+
+## Artificial Neural Network & The Backpropagation Algorithm
+
 sigmoid (activation function):[jianshu](https://www.jianshu.com/p/857d5859d2cc)
 
 - $\delta (.)$
 - hyperbolic tangent
 - Rectified Linear
 
-# 05Nonlinear Classifiers
-
-## Artificial Neural Network & The Backpropagation Algorithm
-
 ## Decision Tree
+
+$$
+H(Y)=- \sum\limits_{i=1}^{N}p_i\log_2 p_i
+$$
+
+
 
 ---
 
