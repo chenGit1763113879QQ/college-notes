@@ -1,13 +1,15 @@
 # 01Introduction
 
-For the pattern to be recognized, *Pattern Recognition* aims to discriminately decide 
-the **category** to which the pattern belongs or predict its corresponding **regression** value 
+For the pattern to be recognized, *Pattern Recognition* aims to 
+discriminately decide the **category** to which the pattern belongs 
+or predict its corresponding **regression** value 
 according to existing knowledge expression
 
 PR is by nature an **inference** process
 
-```mermiad
-input(the pattern to be recognized)-->ex(existing knowledge expression)
+```mermaid
+graph LR
+input(the pattern to be recognized)-->ex[[existing knowledge expression]]
 ex-->output(category/regression values)
 ```
 
@@ -30,7 +32,30 @@ ex-->output(category/regression values)
 
 ---
 
-# 05Nonlinear
+# 03Classifiers based on bayes decision theory
+
+
+## Probabilistic Reasoning
+
+## Principles of Bayes Classifiers
+
+## Commonly Used Bayes Classifiers
+
+## Bayesian Classification for Normal Distributions
+
+## Probability Density Estimation
+
+## Nearest Neighbor
+
+---
+
+# 04Linear Discriminant
+
+## Linear Discriminant Functions and Decision Hyperplanes
+## The Perceptron Algorithm
+## Least Squares Methods
+## Support Vector Machine
+
 
 multiply nonsingular matrix's columns is zero?
 
@@ -54,7 +79,11 @@ sigmoid (activation function):[jianshu](https://www.jianshu.com/p/857d5859d2cc)
 - hyperbolic tangent
 - Rectified Linear
 
-![sigmoid](https://upload-images.jianshu.io/upload_images/749674-cdc2da4f770158ca.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
+# 05Nonlinear Classifiers
+
+## Artificial Neural Network & The Backpropagation Algorithm
+
+## Decision Tree
 
 ---
 
@@ -77,6 +106,8 @@ $$
 
 K-L transformation is one common orthogonal(正交,正交矩阵相乘为单位矩阵) transformation
 
+### on unknown samples
+
 If the type(?distribution?) of training samples is unknown,
 then the within-class scatter matrix(类内离散度矩阵) of training matrix of training samples is chosen as special matrix.
 
@@ -87,7 +118,7 @@ then the within-class scatter matrix(类内离散度矩阵) of training matrix o
    2. 正交化：
 4. Computing K-L transformation: $y=T^Tx$
 
-## known class
+### on known class
 
 1. Computing the within-class scatter matrix
    1. $Sw_i=\sum(x-\mu_i)(x-\mu_i)^T$
@@ -122,7 +153,7 @@ then the within-class scatter matrix(类内离散度矩阵) of training matrix o
   - Top-down Division
   - Bottom-up Agglomerative
 
-## Partitional Clustering
+## Partitional Clustering分块聚类
 
 - to cluster dataset into several subsets based on one criterion function
 - problems
@@ -132,7 +163,7 @@ then the within-class scatter matrix(类内离散度矩阵) of training matrix o
     - One form of distance measurement
   - The determination of the criterion function聚类准则函数 for clustering is an optimize process achieving the best classification results
 
-## K-means
+### K-means法
 
 - Euclidean distance $d=\sqrt{x^Tx}$
 - minimum of error squre sum（最小误差平方和，使每个样本值与所在类均值的差的和最小）
@@ -148,7 +179,7 @@ $$
 5. (迭代)If the current center of each class is the same as the one of prior same class, then the K-Means algorithm is finished
 6. (结束)Otherwise, return to Step2,Step3,Step4, and make a decision whether the condition of finish is satisfied
 
-## Hierarchical clustering
+## Hierarchical clustering分层聚类
 
 Even if the number of classes is unknown,can be used to find the optimal solution according to compactness
 

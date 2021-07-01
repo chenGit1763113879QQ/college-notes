@@ -1,6 +1,8 @@
-## points of PR
+# points
 
-> Teacher say 29 of 58 blank will be examed. But Only 54 I find
+<details><summary>note</summary>
+老师说会从这58个空中出29个考，但是我只找到了53个
+</details>
 
 1. The common Math knowledge of pattern recognition includes [ ] , [ ] and [ ]
 	1. Probability and Statistics
@@ -41,7 +43,7 @@
 	1. discriminant function 𝑔(𝐱)
 10. The classifier relying only on the linear discriminant functions is called [ ]
 	1. linear classifier
-11. The estimation methods of unknown probability density functions include [ ] , [ ] and [ ]
+11. The estimation methods of unknown probability density functions include [ ] and [ ]
 	1. Parameter estimation
 	2. Nonparametric estimation
 12. For unknown probability density functions, two common parameter estimation methods include [ ] , and [ ]
@@ -70,8 +72,8 @@
 18. The common algotithm of decision tree are [ ] , [ ] and [ ]
 	1. ID3, C4.5 and CART
 19. If the original feature of a sample x is $x=(x_1,x_2,x_3)^T$,then making a decison on  using [ ] approach to achieve the reduced feature $x=(x_1-x_3,x_2-x_3)^T$, and using [ ] approach to achieve the reduced feature $x=(x_1,x_2)^T$
-	1. **Feature extraction:  Using the mapping (or transformation) methods to transform the original features to new features.
-	2. Feature selection: Selecting the most representative and best performance features from the original features.
+	1. **Feature extraction**:  Using the mapping (or transformation) methods to transform the original features to new features.
+	2. **Feature selection**: Selecting the most representative and best performance features from the original features.
 20. Two common approaches of dimension reduction are [ ] and [ ]
 	1. K-L:
 	2. PCA: Principal Component Analysis
