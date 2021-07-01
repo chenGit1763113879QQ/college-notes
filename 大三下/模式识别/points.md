@@ -1,8 +1,9 @@
 # points
 
 <details><summary>note</summary>
-老师说会从这58个空中出29个考，但是我只找到了53个
+老师说会从这58个空中出29个考，但是我只找到了53个,经过补充现在有56个了
 </details>
+
 
 1. The common Math knowledge of pattern recognition includes [ ] , [ ] and [ ]
 	1. Probability and Statistics
@@ -53,7 +54,7 @@
 	1. classification interval d (margin of classification)
 	2. support vectors
 	3. find the 𝐰 that can brings the maximum classification interval
-14. For perception, the selection of learning rate Selection of ρ_k
+14. For perception, the selection of learning rate Selection of $\rho$ include [ ], [ ] and [ ]
 	1. Fixed increment ($ρ_k$ is a nonnegative)
 	2. Absolute correction
 	3. Partial correction
