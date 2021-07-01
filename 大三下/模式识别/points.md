@@ -1,17 +1,58 @@
+## points of PR
+
+> Teacher say 29 of 58 blank will be examed. But Only 54 I find
+
 1. The common Math knowledge of pattern recognition includes [ ] , [ ] and [ ] 
-2. Pattern rcogniztion-related disciplines include [ ] , [ ] and [ ] 
+   1. Probability and Statistics
+   2. Linear algebra
+2. Pattern recogniztion-related disciplines include [ ] , [ ] and [ ] 
+   1. Artificial Intelligence
+   2. Signal Processing,
+   3. Information Theory,
+   4. Digital Image Processing, Psychology, etc.
 3. Typical pattern includes [ ] , [ ] , [ ] and [ ] 
+   1. Text, image; 
+   2. Speech, audio, video; 
+   3. ECG, EEG; 
+   4. Socioeconomic phenomenon, etc；
 4. Typical application areas of pattern recognition  includes [ ] , [ ] , [ ] and [ ] 
+   1. Computer Vision
+      1. Character Recognition (OCR) 
+      2. Traffic Sign Recognition (TSR) 
+      3. Action Recognition
+   2. Human-Computer Interaction 
+      1. Speech Recognition
+   3. Medical Field, Network Field, Financial Field, Robotics Field, Driverless Car Field
+   4. Machine vision, Computer aided diagnosis, Biometrics, Image Data Base retrieval, Data mining Bionformatics
 5. The tasks of pattern recognition include [ ] and [ ] 
+   1. Classification
+   2. Regression
 6. Methods for pattern classification include [ ] and [ ] 
+   1. Clustering
+   2. statistical classification (Bayesian method)
+   3. structure-based pattern recognition (HMM)
+   4. neural network-based pattern recognition
 7. Let $w_i$ denote the $i^{th}$ class and $x$ denote one sample, then the prior probability is definde as [ ] ,the class conditional probability is defined as [ ] , and the posterior probability is defined as [ ] 
 8. Let $w_i$ denote the $i^{th}$ class and $x$ denote one sample, then $p(w_i)$ is called [ ] ,$p(x|w_i)$ is called [ ] ,$p(w_i|x)$ is called [ ] 
+   1.  $p(w_i)$ prior probability
+   2. $p(x|w_i)$ : class conditional probability
+   3. $p(w_i|x)$ :  posterior probability
 9. One way to represent a two class pattern classifier is called the [ ] 
+   1. 
 10. The classifier relying only on the linear discriminant functions is called [ ] 
+    1. linear classifier
 11. The estimation methods of unknown probability density functions include [ ] , [ ] and [ ] 
+    1. nonparam
+    2. 
 12. For unknown probability density functions, two common parameter estimation methods include [ ] , and [ ] 
+    1. Maximum Likelihood Parameter Estimation
+    2. Bayesian Estimation 
 13. For Support Vector Machine, the width between decision boundaries is called the [ ] , and few samples closest to the decision boundary are called [ ] , and the aim of Support Vector Machine is to find [ ] 
-14. missed
+    1. classification interval d (margin of classification)
+14. For perception, the selection of learning rate Selection of ρ_k
+    1. Fixed increment ($ρ_k$ is a nonnegative)
+    2. Absolute correction
+    3. Partial correction 
 15. The common activation functions include [ ] , [ ] and [ ] 
 16. For an artificial neural network, the output is affected by [ ] , [ ] and [ ] 
 17. Decision tree model learning includes [ ] , [ ] and [ ] 
@@ -20,4 +61,11 @@
 20. Two common approaches of dimension reduction are [ ] and [ ] .
 21. For two orthogonal vectors $\varPhi_i$ and $\varPhi_j$,($i\neq j$), the result of $\varPhi_i \varPhi_j$ is [ ] 
 22. From the view of Math, K-L transformation is one common [ ] transformation
-23. For clustering method, different [ ] and [ ] can both lead to  
+23. For clustering method, different [ ] and [ ] can both lead to  different clusters
+    1. Different similarity metric 
+    2. Different dimensional scale
+
+
+
+
+
