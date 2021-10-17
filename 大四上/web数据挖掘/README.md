@@ -5,6 +5,11 @@
 - 教材原版网址：
 - 答疑：xiaohuanwu@njupt.edu.cn
 
+## 参考链接
+
+- <https://cs.nju.edu.cn/lwj/course/mmds.html>
+- <http://www.mmds.org/>
+
 ## 课程主要内容
 
 - web数据挖掘的基本概念
