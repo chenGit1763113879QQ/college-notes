@@ -11,6 +11,12 @@
 
 - [markdown笔记目录](content.md)
 
+## permalinks
+
+- [大三下](https://github.com/xsro/college-notes/blob/dbd559cfe4c3eae2355fb4ae40e06fc2c5f8136d/大三下)
+  - 工程与社会
+  - 毛概
+
 ## 感谢
 
 :cherry_blossom:非常感谢教授我课程的老师们 :heart::heart::heart:，老师超棒超棒的
