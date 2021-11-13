@@ -13,7 +13,7 @@
 
 ## permalinks
 
-- [大三下](https://github.com/xsro/college-notes/blob/dbd559cfe4c3eae2355fb4ae40e06fc2c5f8136d/大三下)
+- 大三下 at [dbd559](https://gitee.com/xsro/college-notes/tree/dbd559cfe4c3eae2355fb4ae40e06fc2c5f8136d/大三下)
   - 工程与社会
   - 毛概
 
