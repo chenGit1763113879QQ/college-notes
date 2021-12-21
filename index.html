@@ -198,34 +198,43 @@
 
   <!-- support katex following https://github.com/upupming/docsify-katex#usage-->
   <script defer src="https://cdn.staticfile.org/KaTeX/0.15.1/katex.min.js"
-    integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" crossorigin="anonymous"
-    onload="katexRenderPlugin"></script>
+    integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx"
+    crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.15.1/katex.min.css"
     integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" crossorigin="anonymous">
   <script>
-    const renderKatex = function (mdstr) {
-      for (const r of mdstr.matchAll(/^\$\$([\s\S]+?)\$\$$/gm)) {
-        let html = katex.renderToString(r[1], {
-          throwOnError: true,
-          displayMode: true
+    window.$docsify.plugins.push(
+      function (hook, vm) {
+        let blocks = [];
+        hook.beforeEach(function (mdstr) {
+          for (const r of mdstr.matchAll(/[^\\]\$\$([\s\S]*?[^\\])\$\$/g)) {
+            mdstr = mdstr.replace(r[0], `[math[${blocks.length}]]`)
+            blocks.push([r[0], r[1], true])
+          }
+          for (const r of mdstr.matchAll(/\$(.*?[^\\])\$/g)) {
+            mdstr = mdstr.replace(r[0], `[math[${blocks.length}]]`)
+            blocks.push([r[0], r[1], false])
+          }
+          return mdstr
         });
-        mdstr = mdstr.replace(r[0], `\n<p>${html}</p>\n`)
+        hook.afterEach(function (html, next) {
+          for (const index in blocks) {
+            const [full, tex, display] = blocks[index];
+            let rendered = ""
+            if (typeof katex !== "undefined") {
+              rendered = katex.renderToString(tex, {
+                throwOnError: false,
+                displayMode: display,
+              })
+            } else {
+              rendered = `<a title="${full}">[${display ? "block" : "inline"}math[${blocks.length - index}]]</a>`;
+            }
+            html = html.replace(`[math[${index}]]`, rendered)
+          }
+          next(html)
+        })
       }
-      for (const r of mdstr.matchAll(/\$(.+?)\$/g)) {
-        let html = katex.renderToString(r[1], {
-          throwOnError: false
-        });
-        mdstr = mdstr.replace(r[0], html)
-      }
-      return mdstr
-    }
-    function katexRenderPlugin() {
-      window.$docsify.plugins.push(
-        function (hook, vm) {
-          hook.beforeEach(renderKatex);
-        }
-      );
-    }
+    );
   </script>
 
 
