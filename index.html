@@ -1,23 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
   <meta charset="UTF-8">
-  <title>大学笔记</title>
+  <title>大学自动化专业学习笔记</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport"
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="icon" href="https://portrait.gitee.com/uploads/avatars/user/2532/7597569_chenliucx_1599386104.png"
     type="image/x-icon" />
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css"
-    title="docsify-darklight-theme" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/themes/vue.css" />
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/themes/buble.css" />
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/themes/dark.css" />
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/themes/pure.css" />
 </head>
 
 <body>
+
   <nav>
+    <select id="control">
+      <optgroup label="themes">
+        <option>vue</option>
+        <option>buble</option>
+        <option>dark</option>
+        <option>pure</option>
+      </optgroup>
+      <optgroup label="reload">
+        <option>filelist</option>
+      </optgroup>
+    </select>
     <a href="#/content.md">目录</a>
   </nav>
+  <script>
+    function changeTheme(title) {
+      localStorage.setItem("docsify.theme", title)
+      const themes = document.querySelectorAll('head [rel="stylesheet"]');
+      themes.forEach(function (theme) {
+        theme.disabled = !theme.href.includes(title);
+      });
+    }
+    function updateFiles() {
+      return fetch("https://gitee.com/api/v5/repos/xsro/college-notes/git/trees/main?recursive=1")
+        .then(val => val.text())
+        .then(val => {
+          const files = JSON.parse(val);
+          const markdownFiles = files.tree.map(val => val.path).filter(val => val.endsWith(".md"))
+          localStorage.setItem("markdownFiles", markdownFiles);
+          return markdownFiles;
+        })
+    }
+    const control = document.getElementById("control")
+    control.value = localStorage.getItem("docsify.theme") ?? "vue"
+    changeTheme(control.value);
+    control.addEventListener(
+      "input", e => {
+        if (e.target.value === "filelist") {
+          localStorage.clear()
+          updateFiles().then(
+            files => {
+              alert("reload " + files.length + " files");
+              location.reload()
+            }
+          ).catch(e => {
+            alert("fetch failed" + e)
+          })
+        } else {
+          changeTheme(e.target.value);
+        }
+      }
+    )
+  </script>
+
+
   <div id="app"></div>
   <script>
     window.$docsify = {
@@ -26,59 +81,65 @@
       coverpage: true,
       onlyCover: false,
       plugins: [],
-
-      // complete configuration parameters
-      search: [
-        'content.md',
-        '大三上/matlab系统辨识概览.md',
-        '大三下/模式识别/README.md',
-        '大三下/模式识别/notes.md',
-        '大三下/模式识别/points.md',
-        '大三下/工程与社会/1第一讲 信息工程.md',
-        '大三下/工程与社会/2第二讲.md',
-        '大三下/工程与社会/8社会网络.md',
-        '大三下/工程与社会/8社会群体.md',
-        '大三下/工程与社会/README.md',
-        '大三下/工程与社会/ref.md',
-        '大三下/工程与社会/work.md',
-        '大三上/传感器技术/传感器提纲.md',
-        '大三上/传感器技术/传感器相关知识.md',
-        '大三下/运动控制系统/README.md',
-        '大三下/运动控制系统/points.md',
-        '大三上/电力电子技术/电力电子器件.md',
-        '大三上/电力电子技术/电力电子电路.md',
-        '大三上/职业发展规划/教育部举行新闻发布会.md',
-        '大三下/图像与视频处理/README.md',
-        '大三下/计算机控制系统/README.md',
-        '大三下/计算机控制系统/overview.md',
-        '大三下/图像与视频处理/points.md',
-        '大三下/计算机控制系统/points.md',
-        '大三下/图像与视频处理/points2.md',
-        '大三下/图像与视频处理/points3.md',
-        '大三上/单片机与嵌入式/复习课.md',
-        '大三上/单片机与嵌入式/实验二、80C51汇编语言编程实验.md',
-        '大三上/单片机与嵌入式/实验一、80C51存储器数据传输实验.md',
-        '大三上/电机与拖动基础/关于磁路的一些知识.md',
-        '大二下/概率论与数理统计/R2015b概率与数理统计/readme.md',
-        '大二下/概率论与数理统计/matlab实现/matlab实现.md',
-        '大二下/概率论与数理统计/readme.md',
-        '大二下/概率论与数理统计/概率论与数理统计/概率论.md',
-        '大二下/概率论与数理统计/概率论与数理统计/数理统计.md',
-        '大二下/电工电子基础实验A/考试信息.md',
-        '大二下/电工电子基础实验A/考试说明整理.md',
-        '大二下/马克思主义基本原理/马克思主义基本原理.md',
-        '大三下/毛泽东思想和中国特色社会主义理论体系概论/4社会主义建设道路初步探索的理论成果.md',
-        '大三下/毛泽东思想和中国特色社会主义理论体系概论/课堂提问记录.md',
-        '大三下/毛泽东思想和中国特色社会主义理论体系概论/《毛泽东思想和中国特色社会主义理论体系概论》教材.md',
-        '其他笔记/“老板“女朋友给的题目.md',
-      ]
+      search: {
+        maxAge: 1000,
+        paths: ["README.md", "content.md"]
+      }
     };
   </script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <!-- full text search https://docsify.js.org/#/plugins?id=full-text-search -->
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/docsify.min.js"></script>
 
-  <!-- use gitee corner using https://github.com/Koooooo-7/docsify-corner -->
+
+  <!-- full text search https://docsify.js.org/#/plugins?id=full-text-search -->
+  <script>
+    const files = localStorage.getItem("markdownFiles");
+    if (files) {
+      const _files = files.split(",");
+      window.$docsify.search = {
+        placeholder: {
+          '/': '搜索'
+        },
+        paths: _files
+      };
+      window.$docsify.plugins.push(
+        function (hook, vm) {
+          hook.beforeEach(
+            function (mdstr) {
+              if (mdstr.includes("<!-- generate File list here -->")) {
+                const dup = (val, times) => new Array(times).fill(val).join("")
+                let str = "";
+                let lastSegs = [];
+                for (const file of _files) {
+                  segs = file.split("/").filter(val => val.length > 0);
+                  for (let i = 0; i < segs.length; i++) {
+                    if (i < lastSegs.length && segs[i] === lastSegs[i]) {
+                    }
+                    else if (i === segs.length - 1) {
+                      str += `${dup("\t", i)}- [${segs[i]}](${file})\n`;
+                    }
+                    else {
+                      str += `${dup("\t", i)}- ${segs[i]}\n`;
+                    }
+                  }
+                  lastSegs = segs
+                }
+                const filesList = _files.map(val => `- [${val}](${val})`).join("\n");
+                mdstr = mdstr.replace("<!-- generate File list here -->", str)
+              }
+              return mdstr;
+            }
+          );
+        }
+      );
+    }
+    else {
+      updateFiles()
+    }
+  </script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/plugins/search.min.js"></script>
+
+
+  <!-- use gitee corner following https://github.com/Koooooo-7/docsify-corner -->
   <script>
     function corner(hook, vm) {
       // check if config the repo
@@ -92,24 +153,28 @@
     window.$docsify.plugins.push(corner)
   </script>
 
-  <!-- support edit on gitee by https://docsify.js.org/#/write-a-plugin?id=edit-button -->
+
+  <!-- edit on gitee and markmap by https://docsify.js.org/#/write-a-plugin?id=edit-button -->
   <script>
     window.$docsify.plugins.push(
       function (hook, vm) {
         hook.beforeEach(
           function (mdstr) {
-            const editUrl = 'https://gitee.com/xsro/college-notes/blob/main/' + vm.route.file;
             const prefix = document.location.pathname.endsWith('/') ? '' : '..';
             const markmapUrl = new URL(prefix + 'markmap.html', document.location);
             const markdownUrl = new URL(prefix + vm.route.file, document.location);
-            return `[📝 EDIT DOCUMENT](${editUrl})\t[🎇MARKMAP](${markmapUrl}?md=${markdownUrl})\n` + mdstr;
+            mdstr = `[📝 EDIT](https://gitee.com/xsro/college-notes/edit/main/${vm.route.file})\t`
+              + `[📚 VIEW](https://gitee.com/xsro/college-notes/blob/main/${vm.route.file})\t`
+              + `[🎇 MARKMAP](${markmapUrl}?md=${markdownUrl})\n` + mdstr;
+            return mdstr;
           }
         );
       }
     );
   </script>
 
-  <!-- support mermaid using https://docsify.js.org/#/markdown?id=supports-mermaid -->
+
+  <!-- support mermaid following https://docsify.js.org/#/markdown?id=supports-mermaid -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css">
   <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   <script>
@@ -130,13 +195,49 @@
     };
   </script>
 
-  <!-- support katex by https://github.com/upupming/docsify-katex#usage-->
-  <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
 
-  <!-- https://docsify-darklight-theme.boopathikumar.me/#/installation -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js" type="text/javascript">
+  <!-- support katex following https://github.com/upupming/docsify-katex#usage-->
+  <script defer src="https://cdn.staticfile.org/KaTeX/0.15.1/katex.min.js"
+    integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" crossorigin="anonymous"
+    onload="katexRenderPlugin"></script>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.15.1/katex.min.css"
+    integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" crossorigin="anonymous">
+  <script>
+    const renderKatex = function (mdstr) {
+      for (const r of mdstr.matchAll(/^\$\$([\s\S]+?)\$\$$/gm)) {
+        let html = katex.renderToString(r[1], {
+          throwOnError: true,
+          displayMode: true
+        });
+        mdstr = mdstr.replace(r[0], `\n<p>${html}</p>\n`)
+      }
+      for (const r of mdstr.matchAll(/\$(.+?)\$/g)) {
+        let html = katex.renderToString(r[1], {
+          throwOnError: false
+        });
+        mdstr = mdstr.replace(r[0], html)
+      }
+      return mdstr
+    }
+    function katexRenderPlugin() {
+      window.$docsify.plugins.push(
+        function (hook, vm) {
+          hook.beforeEach(renderKatex);
+        }
+      );
+    }
   </script>
+
+
+  <!-- code syntax  https://docsify.js.org/#/language-highlight-->
+  <script src="https://cdn.bootcdn.net/ajax/libs/prism/1.24.1/components/prism-nasm.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/prism/1.24.1/components/prism-matlab.min.js"></script>
+  <script>
+    //use nasm as syntax for assembly
+    Prism.languages.assembly = Prism.languages.nasm
+  </script>
+
 </body>
 
 </html>

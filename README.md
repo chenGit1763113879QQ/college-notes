@@ -3,6 +3,7 @@
 [![pages](https://img.shields.io/badge/editor-VSCode-blue.svg?logo=visual-studio-code&labelColor=abcdef)](https://code.visualstudio.com/)
 [![deploy](https://img.shields.io/badge/deploy-docsify-brightgreen.svg?labelColor=abcdef)](https://docsify.js.org)
 [![pages](https://img.shields.io/badge/pages-gitee-critical.svg?logo=Gitee&labelColor=abcdef)](https://xsro.gitee.io/college-notes/)
+[![pages](https://img.shields.io/badge/MD-list-purple.svg?logo=book&labelColor=abcdef)](all.md)
 
 这是我在NJUPT学习的笔记，主要是疫情期间线上学习的笔记。由于时间能力有限，不可避免地出现残缺和烂尾。
 内容仅仅作为学习记录，不能保证正确性，如果有侵权请联系删除修改。
