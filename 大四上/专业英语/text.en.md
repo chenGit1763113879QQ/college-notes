@@ -7,7 +7,7 @@
   * times Delay propagation
   * Approximate dynamic programming
 
-## A B S T R A C T
+## ABSTRACT
 
 Due to unexpected demand surge and supply disruptions, road traffic conditions could exhibit substantial uncertainty, which often makes bus travelers encounter start delays of service trips and substantially degrades the performance of an urban transit system.
 Meanwhile, rapid advances of information and communication technologies have presented tremendous opportunities for intelligently scheduling a bus fleet.
@@ -112,7 +112,6 @@ This approach has been successfully applied in various fields.
 Zhang et al. (2006) adopted a multi-layer feedforward neural network, trained with the levenberg-marquardt back-propagation algorithm in Q-learning, to help drivers choose the best route in complex traffic situations.
 Miljković et al. (2013) used neural network reinforcement learning for the development and evaluation of visual control of robot manipulators.
 Hajizadeh and Mahootchi (2016) used a radial-basis-function neural network to approximate the continuation value of the American option.
-
 
 ## 3.Model formulation
 
@@ -223,7 +222,6 @@ Specifically, at the time $t+1$ , the trips of $N^t_2$ and $N^t_3$ will be membe
 [Fig. 4](pics/Fig4.png) specifically demonstrates the transition of the trip sets.
 After updating the trip set $H_{t+1}$ , the arc set $U_{t+1}$ can be accordingly defined, as per the specification in [Section 3.2](#32-decision-variables-and-exogenous-information).
 
-
 With regard to how to obtain the trip time information in the column $t+1$ of Table 1, we first let $a_i^{t+1} = a_i^t, i \in N_2^t \cup \hat{N_2}^t, b_i^{t+1} = b_i^{t}, i \in N_1^t$;
 and then we adopt the following two equations to update the rest trip time information.
 
@@ -319,6 +317,7 @@ This differs from many previous studies adopting piecewise-linear approximate va
 To enhance the accuracy, we consider more complicated value function approximations. Neural networks, widely used in ADP as a powerful and adaptable class of nonlinear forms of value function approximations, offer much more flexible groups of frameworks and can also be updated recursively (e.g., Zhang et al., 2006; Powell, 2007; Hajizadeh and Mahootchi, 2016). In this study, we use a three-layer feed-forward neural network, as shown in Fig. 5, to approximate $V_{t}^{a}\left(\boldsymbol{S}_{t}^{a}\right)$. The neurons receiving in the three-layer feedforward neural network's input layer include: (i) the decision variable $\boldsymbol{X}_{t}$; (ii) the state variable $P_{t}$, i.e., $\left(b_{i}^{t}-t \cdot L\right.$ ) $/ L, i \in N_{1}^{t}$; (iii) the state variable $Q_{t}$, i.e., $\left(a_{i}^{t}-t \cdot L\right) / L, i \in N_{2}^{t} \cup \widehat{N}_{2}^{t}$, where $L$ represents the duration of one time period. The output neuron is the estimated value of the value function $V_{t}^{a}\left(\boldsymbol{S}_{t}^{a}\right) .$ Relu function is utilized to activate the perceptron nodes.
 
 Let $F_{q}^{l, t}$ represent the input unit $q$ in the layer $l$ of the neural network and $\Gamma^{l}$ denote the set of input units in the layer $l$ of the neural network. As mentioned earlier, the vector $\left(\cdots F_{q}^{1, t}, \cdots\right), q \in \Gamma^{1}$, includes the three kinds of neurons receiving above. The adopted threelayer feed-forward neural network is characterized as follows.
+
 $$
 \begin{aligned}
 &Y_{q}^{2, t}=\sum_{q \in \Gamma^{1}} W_{q, q}^{1, t} \cdot F_{q}^{1, t}+v_{q}^{1, t} \quad \forall q \in \Gamma^{2} \\
@@ -326,10 +325,13 @@ $$
 &\nabla_{t}^{a}\left(\boldsymbol{S}_{t}^{a}\right)=\sum_{q \in \Gamma^{2}} W_{q}^{2, t} F_{q}^{2, t}+v^{2, t}
 \end{aligned}
 $$
+
 where $W_{q, q}^{1, t}$ indicates the weight between the unit $q$ in the layer 1 and the unit $q$ in the layer $2 ; W_{q}^{2, t}$ is the weight associated with the input unit $q$ in the layer $2 ; v^{1, t}$ and $v^{2, t}$ are the bias of the unit $q$ in layer 1 and the bias in layer 2 , respectively. Constraint (9) uses the Relu function to activate $Y_{q}^{2, t}$. Constraint (10) defines the approximated value function. Note that the parameters $W_{q, q}^{1, t}, W_{q}^{2, t}, v_{q}^{1, t}$ and $v^{2, t}$ will be iteratively updated using the realized values of visited states, as the ADP algorithm progresses. According to the neuralnetwork-based approximated functions above, the Bellman's equation can be reformulated as follows.
+
 $$
 V_{t}\left(\boldsymbol{S}_{t}\right)=\min _{\boldsymbol{X}_{t}}\left[C_{t}\left(\boldsymbol{S}_{t}, \boldsymbol{X}_{t}\right)+\bar{V}_{t}^{a}\left(\boldsymbol{S}_{t}^{a}\right)\right]
 $$
+
 s.t. Constraints (1) - (10)
 In this way, we circumvent the embedded expectation in the Bellman's equation. Note that it is straightforward to reformulate the model above to be a mixed integer linear program, which we don't present for brevity.
 
@@ -359,7 +361,6 @@ The equation above produces the $\operatorname{TD}(\lambda)$ updating method, wi
 Due to the lack of change with various realized and collected data, deterministic step-size rules may possibly lead to a slow rate of convergence.
 In this study, we adopt an optimal stochastic step-size rule for non-stationary data with a steadily increasing or decreasing mean, i.e., the Bias-adjusted Kalman Filter (BAKF) step-size rule (e.g., George and Powell, 2006; Powell, 2007; Fang et al., 2013), which is given by.
 
-
 $$
 \alpha_{m-1}=1-\frac{\bar{\sigma}^{2}}{\left(1+\varkappa_{m-1}\right) \bar{\sigma}^{2}+\left(\eta_{m}\right)^{2}}
 $$
@@ -374,7 +375,7 @@ At early iterations, we explore more states randomly to update the inaccurate in
 In the numerical study section, we will study the performance of various exploration rates.
 Finally, the detailed procedure of the proposed ADP algorithmic framework is shown as below.
 
-![](pics/ADP_algorithmic_framework.png)
+![ADP algorithmic framework](pics/ADP_algorithmic_framework.png)
 
 ## 5. Numerical examples
 
@@ -413,10 +414,9 @@ Figs.
 7 and 8 respectively depict the bus fleet schedules derived under the ADP and myopic policies in one simulation, with a relative standard deviation of 0.2.
 Examining the details of these bus fleet schedules, we can summarize some reasons why the ADP policy outperforms the myopic policy.
 
-
-- The myopic policy chooses actions just based on the costs of current period. It often fails considering the travel costs from virtual     depots to trips when rescheduling, because these costs may not belong to current periods. In consequence, it is observed that the  myopic policy sends buses to return to virtual depots too frequently, as shown in Fig.8.
-- The ADP policy considers potential delay costs in future periods and thus chooses relatively conservative deadhead trips, i.e., the     slopes of some dotted lines in Fig. 7 are lower than those in Fig.1.
-- In the MDVSP, some trips starting in latter periods can only be fulfilled by buses from particular depots. The myopic policy fails taking into account this factor when scheduling in early periods, because it only focuses on the operations of current periods. Consequently, some buses dispatched in early periods face a relatively low level of utilization in latter periods, because the depot     restriction prevents them from serving many trips, which leads to a waste of resources. Note that this point cannot directly be observed from comparing Figs. 7 and 8, but examining the detailed schedules can reveal it.
+* The myopic policy chooses actions just based on the costs of current period. It often fails considering the travel costs from virtual     depots to trips when rescheduling, because these costs may not belong to current periods. In consequence, it is observed that the  myopic policy sends buses to return to virtual depots too frequently, as shown in Fig.8.
+* The ADP policy considers potential delay costs in future periods and thus chooses relatively conservative deadhead trips, i.e., the     slopes of some dotted lines in Fig. 7 are lower than those in Fig.1.
+* In the MDVSP, some trips starting in latter periods can only be fulfilled by buses from particular depots. The myopic policy fails taking into account this factor when scheduling in early periods, because it only focuses on the operations of current periods. Consequently, some buses dispatched in early periods face a relatively low level of utilization in latter periods, because the depot     restriction prevents them from serving many trips, which leads to a waste of resources. Note that this point cannot directly be observed from comparing Figs. 7 and 8, but examining the detailed schedules can reveal it.
 
 Table 3 compares the average realized operations and delay costs of the static and ADP models, with the relative standard deviation as 0.2.
 We observe that, the advantage of ADP, compared to the static policy, is mainly attributed to its ability of significantly reducing the delay costs.
@@ -485,13 +485,11 @@ Numerical examples based on the realistic operations dataset of bus lines in Bei
 Future research will focus on extending the proposed framework to consider the scheduling problem of alternative fuel vehicles under stochastic traffic conditions.
 Compared to the VSP of conventionally-fueled diesel buses, the alternative-fuel VSP needs to additionally take into account range limitation and recharging plans, which will inevitably increase the model complexity and bring computational challenge (e.g., Chao and Chen, 2013; Adler et al., 2016).
 
-
 ## Acknowledgements
 
 The research is partially supported by grants from National Natural Science Foundation of China (51622807, 71501107, U1766205).
 The research is supported in part by the Center for Data-Centric Management in the Department of Industrial Engineering at Tsinghua University.
 The authors would like to thank the anonymous reviewers for their helpful comments and suggestions.
-
 
 ## Appendix A
 
