@@ -11,23 +11,20 @@
   <link rel="icon" href="https://portrait.gitee.com/uploads/avatars/user/2532/7597569_chenliucx_1599386104.png"
     type="image/x-icon" />
   <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/themes/vue.css" />
-  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/themes/buble.css" />
-  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/themes/dark.css" />
-  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/themes/pure.css" />
 </head>
 
 <body>
 
   <nav>
     <select id="control">
-      <optgroup label="themes">
-        <option>vue</option>
-        <option>buble</option>
-        <option>dark</option>
-        <option>pure</option>
+      <optgroup label="主题">
+        <option value="vue">vue</option>
+        <option value="buble">buble</option>
+        <option value="dark">暗色</option>
+        <option value="pure">纯净</option>
       </optgroup>
-      <optgroup label="reload">
-        <option>filelist</option>
+      <optgroup label="刷新">
+        <option value="filelist">从gitee获取文件列表</option>
       </optgroup>
     </select>
     <a href="#/content.md">目录</a>
@@ -36,9 +33,7 @@
     function changeTheme(title) {
       localStorage.setItem("docsify.theme", title)
       const themes = document.querySelectorAll('head [rel="stylesheet"]');
-      themes.forEach(function (theme) {
-        theme.disabled = !theme.href.includes(title);
-      });
+      themes[0].href=`https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/themes/${title}.css`;
     }
     function updateFiles() {
       return fetch("https://gitee.com/api/v5/repos/xsro/college-notes/git/trees/main?recursive=1")
