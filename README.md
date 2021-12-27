@@ -18,6 +18,10 @@
   - 工程与社会
   - 毛概
 
+## 好玩的表情（侵删）
+
+![](./pics/meme/pid_zhou.gif)
+
 ## 感谢
 
 :cherry_blossom:非常感谢教授我课程的老师们 :heart::heart::heart:，老师超棒超棒的
