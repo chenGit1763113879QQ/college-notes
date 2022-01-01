@@ -1,5 +1,12 @@
 {
     "pasteImage.path": "${projectRoot}/pics",
+    "[markdown]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.unicodeHighlight.ambiguousCharacters": false,
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions":true
+    },
     "markdownlint.config": {
         "MD033": false
     },
