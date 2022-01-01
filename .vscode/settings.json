@@ -6,12 +6,5 @@
         "editor.unicodeHighlight.ambiguousCharacters": false,
         "editor.wordWrap": "on",
         "editor.quickSuggestions":true
-    },
-    "markdownlint.config": {
-        "MD033": false
-    },
-    "markdownlint.ignore": [
-        "README.md",
-        "_*.md"
-    ]
+    }
 }
