@@ -10,7 +10,10 @@
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="icon" href="https://portrait.gitee.com/uploads/avatars/user/2532/7597569_chenliucx_1599386104.png"
     type="image/x-icon" />
-  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/themes/vue.css" />
+  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.12.2/themes/vue.css" />
+  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.12.2/themes/buble.css" disabled/>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.12.2/themes/dark.css" disabled/>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.12.2/themes/pure.css" disabled/>
 </head>
 
 <body>
@@ -33,7 +36,9 @@
     function changeTheme(title) {
       localStorage.setItem("docsify.theme", title)
       const themes = document.querySelectorAll('head [rel="stylesheet"]');
-      themes[0].href=`https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/themes/${title}.css`;
+      themes.forEach(function (theme) {
+        theme.disabled = !theme.href.includes(title);
+      });
     }
     function updateFiles() {
       return fetch("https://gitee.com/api/v5/repos/xsro/college-notes/git/trees/main?recursive=1")
@@ -75,20 +80,90 @@
       repo: 'https://gitee.com/xsro/college-notes',
       coverpage: true,
       onlyCover: false,
-      plugins: [],
+      plugins: [
+        // https://docsify.js.org/#/write-a-plugin?id=write-a-plugin
+        function (hook, vm) {
+          hook.init(function () {
+            // Called when the script starts running, only trigger once, no arguments,
+          });
+
+          hook.beforeEach(function (content) {
+            // Invoked each time before parsing the Markdown file.
+            // edit on gitee and markmap by https://docsify.js.org/#/write-a-plugin?id=edit-button
+            const prefix = document.location.pathname.endsWith('/') ? '' : '..';
+            const markmapUrl = new URL(prefix + 'markmap.html', document.location);
+            const markdownUrl = new URL(prefix + vm.route.file, document.location);
+            markmapUrl.searchParams.set("md", markdownUrl)
+            content = `[📝 EDIT](https://gitee.com/xsro/college-notes/edit/main/${vm.route.file})\t`
+              + `[📚 VIEW](https://gitee.com/xsro/college-notes/blob/main/${vm.route.file})\t`
+              + `[🎇 MARKMAP](${markmapUrl})\n` + content;
+
+            const files = localStorage.getItem("markdownFiles");
+            if (files && content.includes("<!-- generate File list here -->")) {
+              const dup = (val, times) => new Array(times).fill(val).join("")
+              let str = "";
+              let lastSegs = [];
+              for (const file of _files) {
+                segs = file.split("/").filter(val => val.length > 0);
+                for (let i = 0; i < segs.length; i++) {
+                  if (i < lastSegs.length && segs[i] === lastSegs[i]) {
+                  }
+                  else if (i === segs.length - 1) {
+                    str += `${dup("\t", i)}- [${segs[i]}](${file})\n`;
+                  }
+                  else {
+                    str += `${dup("\t", i)}- ${segs[i]}\n`;
+                  }
+                }
+                lastSegs = segs
+              }
+              const filesList = _files.map(val => `- [${val}](${val})`).join("\n");
+              mdstr = mdstr.replace("<!-- generate File list here -->", str)
+            }
+
+            return content;
+          });
+
+          hook.afterEach(function (html, next) {
+            // Invoked each time after the Markdown file is parsed.
+            // beforeEach and afterEach support asynchronous。
+            // ...
+            // call `next(html)` when task is done.
+            next(html);
+          });
+
+          hook.doneEach(function () {
+            // Invoked each time after the data is fully loaded, no arguments,
+            // ...
+          });
+
+          hook.mounted(function () {
+            // Called after initial completion. Only trigger once, no arguments.
+            // use gitee corner following https://github.com/Koooooo-7/docsify-corner 
+            const icon = "https://gitee.com/xsro/college-notes/widgets/widget_1.svg"
+            const a = document.querySelector('a.github-corner')
+            a.href = 'https://gitee.com/xsro/college-notes'
+            a.innerHTML = `<img docsify-corner src=${icon} width= 80 height = 80>`
+          });
+
+          hook.ready(function () {
+            // Called after initial completion, no arguments.
+          });
+        }],
       search: {
         maxAge: 1000,
         paths: ["README.md", "content.md"]
       }
     };
   </script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/docsify.min.js"></script>
+  <script src="https://cdn.staticfile.org/docsify/4.12.2/docsify.min.js"></script>
 
 
   <!-- full text search https://docsify.js.org/#/plugins?id=full-text-search -->
   <script>
     const files = localStorage.getItem("markdownFiles");
-    if (files) {
+    if (!files) { updateFiles() }
+    else {
       const _files = files.split(",");
       window.$docsify.search = {
         placeholder: {
@@ -96,84 +171,13 @@
         },
         paths: _files
       };
-      window.$docsify.plugins.push(
-        function (hook, vm) {
-          hook.beforeEach(
-            function (mdstr) {
-              if (mdstr.includes("<!-- generate File list here -->")) {
-                const dup = (val, times) => new Array(times).fill(val).join("")
-                let str = "";
-                let lastSegs = [];
-                for (const file of _files) {
-                  segs = file.split("/").filter(val => val.length > 0);
-                  for (let i = 0; i < segs.length; i++) {
-                    if (i < lastSegs.length && segs[i] === lastSegs[i]) {
-                    }
-                    else if (i === segs.length - 1) {
-                      str += `${dup("\t", i)}- [${segs[i]}](${file})\n`;
-                    }
-                    else {
-                      str += `${dup("\t", i)}- ${segs[i]}\n`;
-                    }
-                  }
-                  lastSegs = segs
-                }
-                const filesList = _files.map(val => `- [${val}](${val})`).join("\n");
-                mdstr = mdstr.replace("<!-- generate File list here -->", str)
-              }
-              return mdstr;
-            }
-          );
-        }
-      );
-    }
-    else {
-      updateFiles()
     }
   </script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.12.1/plugins/search.min.js"></script>
-
-
-  <!-- use gitee corner following https://github.com/Koooooo-7/docsify-corner -->
-  <script>
-    function corner(hook, vm) {
-      // check if config the repo
-      const icon = "https://gitee.com/xsro/college-notes/widgets/widget_1.svg"
-      hook.mounted(function () {
-        const a = document.querySelector('a.github-corner')
-        a.href = 'https://gitee.com/xsro/college-notes'
-        a.innerHTML = `<img docsify-corner src=${icon} width= 80 height = 80>`
-      })
-    }
-    window.$docsify.plugins.push(corner)
-  </script>
-
-
-  <!-- edit on gitee and markmap by https://docsify.js.org/#/write-a-plugin?id=edit-button -->
-  <script>
-    window.$docsify.plugins.push(
-      function (hook, vm) {
-        hook.beforeEach(
-          function (mdstr) {
-            const prefix = document.location.pathname.endsWith('/') ? '' : '..';
-            const markmapUrl = new URL(prefix + 'markmap.html', document.location);
-            const markdownUrl = new URL(prefix + vm.route.file, document.location);
-            markmapUrl.searchParams.set("md",markdownUrl)
-            mdstr = `[📝 EDIT](https://gitee.com/xsro/college-notes/edit/main/${vm.route.file})\t`
-              + `[📚 VIEW](https://gitee.com/xsro/college-notes/blob/main/${vm.route.file})\t`
-              + `[🎇 MARKMAP](${markmapUrl})\n` + mdstr;
-              
-            return mdstr;
-          }
-        );
-      }
-    );
-  </script>
-
+  <script src="https://cdn.staticfile.org/docsify/4.12.2/plugins/search.min.js"></script>
 
   <!-- support mermaid following https://docsify.js.org/#/markdown?id=supports-mermaid -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css">
-  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   <script>
     var num = 0;
     mermaid.initialize({ startOnLoad: false });
@@ -194,11 +198,8 @@
 
 
   <!-- support katex following https://github.com/upupming/docsify-katex#usage-->
-  <script defer src="https://cdn.staticfile.org/KaTeX/0.15.1/katex.min.js"
-    integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx"
-    crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.15.1/katex.min.css"
-    integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" crossorigin="anonymous">
+  <script defer src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.15.2/katex.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.15.2/katex.min.css">
   <script>
     window.$docsify.plugins.push(
       function (hook, vm) {
@@ -236,9 +237,9 @@
 
 
   <!-- code syntax  https://docsify.js.org/#/language-highlight-->
-  <script src="https://cdn.bootcdn.net/ajax/libs/prism/1.24.1/components/prism-nasm.min.js"></script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/prism/1.24.1/components/prism-matlab.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/prism/1.26.0/components/prism-nasm.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/prism/1.26.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/prism/1.26.0/components/prism-matlab.min.js"></script>
   <script>
     //use nasm as syntax for assembly
     Prism.languages.assembly = Prism.languages.nasm

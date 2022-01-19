@@ -1,4 +1,4 @@
-# 笔记目录
+# 笔记目录[![all files](https://img.shields.io/badge/MD-list-purple.svg?logo=book&labelColor=abcdef)](all.md)
 
 ## 大四上
 
