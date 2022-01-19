@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>大学自动化专业学习笔记</title>
+  <title>自动化专业学习笔记</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport"
@@ -11,9 +11,9 @@
   <link rel="icon" href="https://portrait.gitee.com/uploads/avatars/user/2532/7597569_chenliucx_1599386104.png"
     type="image/x-icon" />
   <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.12.2/themes/vue.css" />
-  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.12.2/themes/buble.css" disabled/>
-  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.12.2/themes/dark.css" disabled/>
-  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.12.2/themes/pure.css" disabled/>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.12.2/themes/buble.css" disabled />
+  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.12.2/themes/dark.css" disabled />
+  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.12.2/themes/pure.css" disabled />
 </head>
 
 <body>
@@ -34,11 +34,18 @@
   </nav>
   <script>
     function changeTheme(title) {
-      localStorage.setItem("docsify.theme", title)
       const themes = document.querySelectorAll('head [rel="stylesheet"]');
+      localStorage.setItem("docsify.theme", title)
+      let all_disabled = true;
       themes.forEach(function (theme) {
         theme.disabled = !theme.href.includes(title);
+        all_disabled &= theme.disabled;
       });
+      if (all_disabled) {
+        console.warn(`the css title ${title} is not a valid one`, themes);
+        console.warn(`use first css ${themes[0].href}`);
+        themes[0].disabled = false;
+      }
     }
     function updateFiles() {
       return fetch("https://gitee.com/api/v5/repos/xsro/college-notes/git/trees/main?recursive=1")
@@ -50,6 +57,7 @@
           return markdownFiles;
         })
     }
+
     const control = document.getElementById("control")
     control.value = localStorage.getItem("docsify.theme") ?? "vue"
     changeTheme(control.value);
@@ -96,14 +104,15 @@
             markmapUrl.searchParams.set("md", markdownUrl)
             content = `[📝 EDIT](https://gitee.com/xsro/college-notes/edit/main/${vm.route.file})\t`
               + `[📚 VIEW](https://gitee.com/xsro/college-notes/blob/main/${vm.route.file})\t`
-              + `[🎇 MARKMAP](${markmapUrl})\n` + content;
-
-            const files = localStorage.getItem("markdownFiles");
-            if (files && content.includes("<!-- generate File list here -->")) {
+              + `[🎇 MARKMAP](${markmapUrl})\n\n` + content;
+            //write all files list to all.md, this list is used for search and can be different from the deployed files
+            const _files = localStorage.getItem("markdownFiles");
+            if (_files && content.includes("<!-- generate File list here -->")) {
+              const files = _files.split(",");
               const dup = (val, times) => new Array(times).fill(val).join("")
               let str = "";
               let lastSegs = [];
-              for (const file of _files) {
+              for (const file of files) {
                 segs = file.split("/").filter(val => val.length > 0);
                 for (let i = 0; i < segs.length; i++) {
                   if (i < lastSegs.length && segs[i] === lastSegs[i]) {
@@ -117,8 +126,8 @@
                 }
                 lastSegs = segs
               }
-              const filesList = _files.map(val => `- [${val}](${val})`).join("\n");
-              mdstr = mdstr.replace("<!-- generate File list here -->", str)
+              const filesList = files.map(val => `- [${val}](${val})`).join("\n");
+              content = content.replace("<!-- generate File list here -->", str)
             }
 
             return content;
