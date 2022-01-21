@@ -33,6 +33,7 @@
     <a href="#/content.md">目录</a>
   </nav>
   <script>
+    //函数：更换docsify主题
     function changeTheme(title) {
       const themes = document.querySelectorAll('head [rel="stylesheet"]');
       localStorage.setItem("docsify.theme", title)
@@ -47,17 +48,27 @@
         themes[0].disabled = false;
       }
     }
+    //函数：从gitee API获取当前仓库的文件树，需要仓库开源，主要用于支持搜索功能
     function updateFiles() {
       return fetch("https://gitee.com/api/v5/repos/xsro/college-notes/git/trees/main?recursive=1")
         .then(val => val.text())
         .then(val => {
           const files = JSON.parse(val);
           const markdownFiles = files.tree.map(val => val.path).filter(val => val.endsWith(".md"))
-          localStorage.setItem("markdownFiles", markdownFiles);
+          localStorage.setItem("docsify.mds.list", markdownFiles.join(','));
+          localStorage.setItem("docsify.mds.updateTime", Date.now());
+          console.log("updated")
           return markdownFiles;
         })
     }
 
+    //超时自动更新文件树
+    const lastUpdateListTime = localStorage.getItem("docsify.mds.updateTime");
+    if (!lastUpdateListTime || Date.now() - lastUpdateListTime > 1000 * 60 * 24) {
+      updateFiles();
+    }
+
+    //手动更换主题或刷新文件树
     const control = document.getElementById("control")
     control.value = localStorage.getItem("docsify.theme") ?? "vue"
     changeTheme(control.value);
@@ -97,6 +108,7 @@
 
           hook.beforeEach(function (content) {
             // Invoked each time before parsing the Markdown file.
+
             // edit on gitee and markmap by https://docsify.js.org/#/write-a-plugin?id=edit-button
             const prefix = document.location.pathname.endsWith('/') ? '' : '..';
             const markmapUrl = new URL(prefix + 'markmap.html', document.location);
@@ -105,9 +117,11 @@
             content = `[📝 EDIT](https://gitee.com/xsro/college-notes/edit/main/${vm.route.file})\t`
               + `[📚 VIEW](https://gitee.com/xsro/college-notes/blob/main/${vm.route.file})\t`
               + `[🎇 MARKMAP](${markmapUrl})\n\n` + content;
+
             //write all files list to all.md, this list is used for search and can be different from the deployed files
-            const _files = localStorage.getItem("markdownFiles");
-            if (_files && content.includes("<!-- generate File list here -->")) {
+            const _files = localStorage.getItem("docsify.mds.list");
+            const _time = localStorage.getItem("docsify.mds.updateTime");
+            if (_files && _time && content.includes("<!-- generate File list here -->")) {
               const files = _files.split(",");
               const dup = (val, times) => new Array(times).fill(val).join("")
               let str = "";
@@ -127,7 +141,8 @@
                 lastSegs = segs
               }
               const filesList = files.map(val => `- [${val}](${val})`).join("\n");
-              content = content.replace("<!-- generate File list here -->", str)
+              const header = `\nupdate at \`${new Date(parseInt(_time)).toLocaleString()}\`\n\n`;
+              content = content.replace("<!-- generate File list here -->", header + str)
             }
 
             return content;
@@ -170,9 +185,8 @@
 
   <!-- full text search https://docsify.js.org/#/plugins?id=full-text-search -->
   <script>
-    const files = localStorage.getItem("markdownFiles");
-    if (!files) { updateFiles() }
-    else {
+    const files = localStorage.getItem("docsify.mds.list");
+    if (files) {
       const _files = files.split(",");
       window.$docsify.search = {
         placeholder: {
